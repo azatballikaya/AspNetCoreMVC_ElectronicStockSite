@@ -1,9 +1,12 @@
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 
 namespace FormsApp.Models{
     public class Repository{
         private static readonly List<Product> _products=new();
         private static readonly List<Category> _categories=new();
+       public static Sepet _sepet=new Sepet();
+
         static Repository(){
            _categories.Add(new Category{
             CategoryId=1,
@@ -61,6 +64,8 @@ namespace FormsApp.Models{
             Image="macbook-pro.jpg",
             CategoryId=2,
            });
+           
+
         }
         public static List<Product> Products{
             get{return _products;}
@@ -86,6 +91,10 @@ namespace FormsApp.Models{
             var removeEntity=_products.FirstOrDefault(x=>x.ProductId==entiity.ProductId);
            if(entiity!=null)
             _products.Remove(removeEntity);
+        }
+        public static void SepetUrunEkle(Product p1){
+           
+            _sepet._products.Add(p1);
         }
 
     }

@@ -15,6 +15,7 @@ public class HomeController : Controller
         _logger = logger;
     }
     [HttpGet]
+   
     public IActionResult Index(string searchString,string category)
     {
         ViewBag.searchString=searchString;
@@ -26,7 +27,7 @@ public class HomeController : Controller
             products=products.Where(x=>x.CategoryId==int.Parse(category)).ToList();
         }
         // ViewBag.Categories=new SelectList(Repository.Categories,"CategoryId","Name",category);
-        var model=new ProductViewModel(){
+         var model=new ProductViewModel(){
             Products=products,
             Categories=Repository.Categories,
             SelectedCategory=category
@@ -133,6 +134,21 @@ public class HomeController : Controller
             Repository.EditProduct(item);
         }
         return RedirectToAction("Index");
+    }
+    public IActionResult SepeteEkle(int id){
+        Product p1=Repository.Products.FirstOrDefault(x=>x.ProductId==id);
+        
+        
+        if(p1!=null ){
+        Repository.SepetUrunEkle(p1);
+        }
+        else{
+            return NotFound();
+        }
+        return RedirectToAction("Index");
+    }
+    public IActionResult Sepet(){
+        return View(Repository._sepet);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
